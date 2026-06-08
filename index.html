@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOISE® — CONFINED AMPLITUDE</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #111111;
+    --fg: #f2f2f2;
+    --mute: #777777;
+    --line: #1f1f1f;
+    --acid: #a4e92f;
+    --acid-dim: #6fa31d;
+    --warn: #ff3b30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+
+  /* ========== NAV ========== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    background: rgba(10,10,10,0.78);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .logo {
+    height: 22px;
+    filter: invert(1);
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .nav-links a {
+    transition: color 0.2s;
+  }
+  .nav-links a:hover {
+    color: var(--acid);
+  }
+  .nav-cta {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--acid);
+    color: var(--acid);
+    transition: all 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--acid);
+    color: var(--bg);
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 64px 64px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 50%, rgba(164,233,47,0.06), transparent 60%),
+      linear-gradient(180deg, #050505 0%, #0c0c0c 100%);
+    z-index: 0;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 1;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    width: 100%;
+    align-items: center;
+  }
+  .hero-text {
+    position: relative;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-meta .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--acid);
+    box-shadow: 0 0 12px var(--acid);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  .hero-logo {
+    width: 100%;
+    max-width: 720px;
+    filter: invert(1);
+    margin-bottom: 16px;
+  }
+  .hero-tag {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 14px;
+    letter-spacing: 0.35em;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .hero-statement {
+    max-width: 480px;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--fg);
+    margin-bottom: 12px;
+  }
+  .hero-statement-cn {
+    max-width: 480px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--mute);
+    margin-bottom: 40px;
+  }
+  .hero-cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .btn {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border: 1px solid var(--fg);
+    color: var(--fg);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .btn.primary {
+    background: var(--acid);
+    color: var(--bg);
+    border-color: var(--acid);
+  }
+  .btn.primary:hover {
+    background: transparent;
+    color: var(--acid);
+  }
+  .btn .arrow { font-size: 14px; }
+
+  .hero-visual {
+    position: relative;
+  }
+  .hero-visual img {
+    width: 100%;
+    border: 1px solid var(--line);
+  }
+  .hero-readout {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(10,10,10,0.8);
+    border: 1px solid var(--acid);
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+    z-index: 3;
+  }
+  .hero-readout .big {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--acid);
+    text-shadow: 0 0 16px rgba(164,233,47,0.6);
+  }
+  .hero-corner {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    z-index: 3;
+  }
+
+  /* ========== SECTION COMMON ========== */
+  .section {
+    padding: 120px 64px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+    align-items: end;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--acid);
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .section-title .accent { color: var(--acid); }
+
+  /* ========== MANIFESTO ========== */
+  .manifesto {
+    background: var(--bg);
+  }
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .manifesto-text h2 {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .manifesto-text h2 .acid { color: var(--acid); }
+  .manifesto-text .quote-cn {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--mute);
+    border-left: 2px solid var(--acid);
+    padding-left: 20px;
+    max-width: 420px;
+  }
+  .manifesto-visual {
+    position: relative;
+  }
+  .manifesto-visual img {
+    width: 100%;
+    border: 1px solid var(--line);
+  }
+
+  /* ========== CONCEPT POSTER ========== */
+  .concept {
+    padding: 0;
+    background: #050505;
+  }
+  .concept-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+  }
+  .concept-side {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--line);
+  }
+  .concept-side .label {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--acid);
+    margin-bottom: 24px;
+  }
+  .concept-side h3 {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .concept-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 48px;
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: 60px 1fr 80px;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+  .stage:last-child { border-bottom: none; }
+  .stage .idx {
+    font-size: 11px;
+    color: var(--mute);
+    letter-spacing: 0.2em;
+  }
+  .stage .name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    text-transform: uppercase;
+  }
+  .stage .val {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+    text-align: right;
+  }
+  .concept-poster {
+    position: relative;
+    background: #000;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .concept-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ========== CAMPAIGN FILM ========== */
+  .film {
+    background: #050505;
+    padding: 120px 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  .film-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+  .film-head h2 {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .film-head h2 .acid { color: var(--acid); }
+  .film-head .meta {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-align: right;
+  }
+  .film-player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .film-player video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .film-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .film-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: rgba(5,5,5,0.45);
+    transition: background 0.3s, opacity 0.3s;
+  }
+  .film-player:hover .film-overlay { background: rgba(5,5,5,0.3); }
+  .film-overlay.hidden { opacity: 0; pointer-events: none; }
+  .film-play-btn {
+    width: 88px;
+    height: 88px;
+    border: 1px solid var(--acid);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(164,233,47,0.08);
+    transition: all 0.25s;
+  }
+  .film-player:hover .film-play-btn {
+    background: var(--acid);
+    box-shadow: 0 0 32px rgba(164,233,47,0.5);
+  }
+  .film-play-btn svg { width: 30px; height: 30px; fill: var(--acid); margin-left: 4px; transition: fill 0.25s; }
+  .film-player:hover .film-play-btn svg { fill: var(--bg); }
+  .film-overlay .label {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: var(--fg);
+    text-transform: uppercase;
+  }
+  .film-overlay .label .db { color: var(--acid); }
+  .film-readout {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 3;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    pointer-events: none;
+  }
+  .film-corner {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 3;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    pointer-events: none;
+  }
+
+  /* ========== LOOKBOOK ========== */
+  .lookbook {
+    background: #050505;
+    padding: 120px 0;
+  }
+  .lookbook-head {
+    padding: 0 64px;
+    margin-bottom: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+  .lookbook-head h2 {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .lookbook-head h2 .acid { color: var(--acid); }
+  .lookbook-head .meta {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-align: right;
+  }
+  .lookbook-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4px;
+    padding: 0 4px;
+  }
+  .look {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: #000;
+  }
+  .look.tall { aspect-ratio: 4/5; }
+  .look img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .look:hover img { transform: scale(1.04); }
+  .look .tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(10,10,10,0.85);
+    border: 1px solid var(--acid);
+    color: var(--acid);
+    padding: 6px 10px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+  .look .caption {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    color: var(--fg);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .look .caption .db {
+    color: var(--acid);
+    font-weight: 700;
+  }
+  .lookbook-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  /* ========== PRODUCTS ========== */
+  .products {
+    background: #0d0d0d;
+    padding: 120px 64px;
+  }
+  .products-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+  .products-head h2 {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .products-head h2 .acid { color: var(--acid); }
+  .products-head .meta {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-align: right;
+    max-width: 280px;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .product {
+    background: #f7f7f7;
+    padding: 32px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .product:hover {
+    background: #ffffff;
+  }
+  .product-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: contain;
+    margin-bottom: 24px;
+  }
+  .product-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: #111;
+  }
+  .product-info .left .code {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .product-info .left .name {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .product-info .left .desc {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    color: #666;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+  .product-info .right {
+    text-align: right;
+  }
+  .product-info .right .price {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+  }
+  .product-info .right .db {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    color: var(--acid-dim);
+    letter-spacing: 0.15em;
+    margin-top: 4px;
+  }
+  .product-corner {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: #888;
+  }
+
+  /* ========== SPECS / DATA STRIP ========== */
+  .data-strip {
+    background: #050505;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 24px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-transform: uppercase;
+  }
+  .data-strip .item .v {
+    color: var(--acid);
+    font-weight: 700;
+  }
+
+  /* ========== CTA ========== */
+  .cta {
+    padding: 160px 64px;
+    background:
+      radial-gradient(ellipse at center, rgba(164,233,47,0.08), transparent 60%),
+      #050505;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .cta h2 {
+    font-size: clamp(48px, 7vw, 110px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .cta h2 .line { display: block; }
+  .cta h2 .acid { color: var(--acid); }
+  .cta .sub {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--mute);
+    text-transform: uppercase;
+    margin-top: 32px;
+    margin-bottom: 48px;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 40px;
+    background: var(--acid);
+    color: var(--bg);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: 1px solid var(--acid);
+    transition: all 0.2s;
+  }
+  .cta-btn:hover {
+    background: transparent;
+    color: var(--acid);
+    box-shadow: 0 0 24px rgba(164,233,47,0.4);
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    padding: 64px 64px 32px;
+    background: #050505;
+    color: var(--mute);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-logo {
+    height: 28px;
+    filter: invert(1);
+    margin-bottom: 20px;
+  }
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--fg);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .footer-col ul {
+    list-style: none;
+  }
+  .footer-col li {
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .footer-col li a:hover { color: var(--acid); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-transform: uppercase;
+  }
+  .footer-mark {
+    color: var(--acid);
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .manifesto-grid { grid-template-columns: 1fr; gap: 48px; }
+    .concept-wrap { grid-template-columns: 1fr; }
+    .concept-side { border-right: none; border-bottom: 1px solid var(--line); }
+    .lookbook-grid { grid-template-columns: 1fr; }
+    .lookbook-row-2 { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .section-head { grid-template-columns: 1fr; gap: 16px; }
+    .section-title, .manifesto-text h2, .lookbook-head h2, .products-head h2, .film-head h2 { font-size: 40px; }
+    .film-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .film-head .meta { text-align: left; }
+  }
+  @media (max-width: 640px) {
+    .film { padding: 80px 20px; }
+    .film-play-btn { width: 64px; height: 64px; }
+    .nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 48px; }
+    .section { padding: 80px 20px; }
+    .products { padding: 80px 20px; }
+    .lookbook-head { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .lookbook-head .meta { text-align: left; }
+    .cta { padding: 100px 20px; }
+    .footer { padding: 48px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr; }
+    .data-strip { padding: 20px; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav">
+  <img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="logo">
+  <div class="nav-links">
+    <a href="#manifesto">Manifesto</a>
+    <a href="#concept">Concept</a>
+    <a href="#film">Film</a>
+    <a href="#lookbook">Lookbook</a>
+    <a href="#drop">Drop 01</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#drop" class="nav-cta">Shop / 购买</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-meta">
+        <span class="dot"></span>
+        <span>SYSTEM ONLINE · ZONE 07 · 36.7°C</span>
+      </div>
+      <img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="hero-logo">
+      <div class="hero-tag">// CONFINED AMPLITUDE</div>
+      <p class="hero-statement">
+        Noise is not removed.<br>
+        It is measured, confined,<br>
+        amplified into structure.
+      </p>
+      <p class="hero-statement-cn">
+        噪音不会被消除。<br>
+        它被测量、被限制，<br>
+        并被放大成结构。
+      </p>
+      <div class="hero-cta-row">
+        <a href="#drop" class="btn primary">Enter Drop 01 <span class="arrow">→</span></a>
+        <a href="#manifesto" class="btn">Read Manifesto</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-readout">
+        NOISE LEVEL
+        <span class="big">87 dB</span>
+        STATUS · CONFINED
+      </div>
+      <img src="ChatGPT Image 2026年5月18日 18_31_54.png" alt="Noise Control Zone">
+      <div class="hero-corner">// CAPTURE 003 — NOISE CONTROL ZONE / ZONE-07</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== DATA STRIP ==================== -->
+<div class="data-strip">
+  <div class="item">SIGNAL <span class="v">87 dB</span></div>
+  <div class="item">DISTORTION <span class="v">0.43%</span></div>
+  <div class="item">COMPRESSION <span class="v">RATIO 4:1</span></div>
+  <div class="item">CORE TEMP <span class="v">36.7°C</span></div>
+  <div class="item">STATUS <span class="v">AMPLIFIED</span></div>
+  <div class="item">ORIGIN <span class="v">ZONE-07</span></div>
+</div>
+
+<!-- ==================== MANIFESTO ==================== -->
+<section class="section manifesto" id="manifesto">
+  <div class="section-head">
+    <div class="section-num">/ 01 — MANIFESTO</div>
+  </div>
+  <div class="manifesto-grid">
+    <div class="manifesto-text">
+      <h2>
+        TOO LOUD<br>
+        TO BE<br>
+        <span class="acid">CONTROLLED.</span>
+      </h2>
+      <p class="quote-cn">
+        我们不消音。我们把噪声压进结构里——压力、密度、振幅，都被保留下来。
+        街道、地下、机器、心跳——所有不被允许发声的频率，在这里被记录为材料、剪裁与图形。
+      </p>
+    </div>
+    <div class="manifesto-visual">
+      <img src="ChatGPT Image 2026年5月18日 18_44_10.png" alt="Confined amplitude">
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONCEPT POSTER ==================== -->
+<section class="concept" id="concept">
+  <div class="concept-wrap">
+    <div class="concept-side">
+      <div>
+        <div class="label">/ 02 — CONCEPT // CONFINED AMPLITUDE</div>
+        <h3>
+          FOUR<br>
+          STAGES<br>
+          <span style="color:var(--acid)">OF NOISE.</span>
+        </h3>
+        <p style="color:var(--mute); font-size:14px; line-height:1.7; max-width:380px; margin-top:24px;">
+          From raw signal to compressed structure — every garment in this drop sits on one of four points along the amplitude curve.
+        </p>
+      </div>
+      <div class="concept-stages">
+        <div class="stage">
+          <span class="idx">01</span>
+          <span class="name">Signal · 信号</span>
+          <span class="val">RAW</span>
+        </div>
+        <div class="stage">
+          <span class="idx">02</span>
+          <span class="name">Distortion · 扭曲</span>
+          <span class="val">+12 dB</span>
+        </div>
+        <div class="stage">
+          <span class="idx">03</span>
+          <span class="name">Compression · 压缩</span>
+          <span class="val">4 : 1</span>
+        </div>
+        <div class="stage">
+          <span class="idx">04</span>
+          <span class="name">Structure · 结构</span>
+          <span class="val">87 dB</span>
+        </div>
+      </div>
+    </div>
+    <div class="concept-poster">
+      <img src="第一页第二版.png" alt="NOISE concept poster">
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CAMPAIGN FILM ==================== -->
+<section class="film" id="film">
+  <div class="film-head">
+    <h2>
+      CAMPAIGN<br>
+      <span class="acid">FILM.</span>
+    </h2>
+    <div class="meta">
+      / 02.5 — MOTION CAPTURE<br>
+      ZONE-07 · 00:30 · SOUND ON<br>
+      CONFINED AMPLITUDE
+    </div>
+  </div>
+  <div class="film-player" id="filmPlayer" data-src="202606020207.mp4">
+    <img src="ChatGPT Image 2026年5月18日 16_54_46.png" alt="NOISE campaign film" class="film-poster">
+    <div class="film-readout">● REC · 87 dB · ZONE-07</div>
+    <div class="film-overlay" id="filmOverlay">
+      <div class="film-play-btn">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="label">PLAY FILM · 00:30 · <span class="db">SOUND ON</span></div>
+    </div>
+    <div class="film-corner">// 202606 — MOTION 001</div>
+  </div>
+</section>
+
+<!-- ==================== LOOKBOOK ==================== -->
+<section class="lookbook" id="lookbook">
+  <div class="lookbook-head">
+    <h2>
+      ZONE<br>
+      <span class="acid">RECORDINGS.</span>
+    </h2>
+    <div class="meta">
+      / 03 — LOOKBOOK<br>
+      FIELD CAPTURE · ZONE-07<br>
+      87 — 92 dB
+    </div>
+  </div>
+
+  <div class="lookbook-grid">
+    <div class="look">
+      <img src="ChatGPT Image 2026年5月18日 18_31_54.png" alt="Noise Control Zone">
+      <div class="tag">CAPTURE / 001</div>
+      <div class="caption">
+        <span>NOISE CONTROL ZONE</span>
+        <span class="db">87 dB</span>
+      </div>
+    </div>
+    <div class="look tall">
+      <img src="ChatGPT Image 2026年5月18日 18_44_10.png" alt="Amplified wall">
+      <div class="tag">CAPTURE / 002</div>
+      <div class="caption">
+        <span>AMPLIFIED WALL</span>
+        <span class="db">92 dB</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lookbook-row-2">
+    <div class="look">
+      <img src="ChatGPT Image 2026年5月18日 16_54_46.png" alt="Tunnel run">
+      <div class="tag">CAPTURE / 003</div>
+      <div class="caption">
+        <span>TUNNEL · MIDNIGHT RUN</span>
+        <span class="db">CORE 36.7°C</span>
+      </div>
+    </div>
+    <div class="look" style="background:#0a0a0a;">
+      <img src="第一页第二版.png" alt="Brand stories" style="object-fit:contain;">
+      <div class="tag">DOSSIER / 00</div>
+      <div class="caption">
+        <span>BRAND STORIES</span>
+        <span class="db">READ ↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRODUCTS ==================== -->
+<section class="products" id="drop">
+  <div class="products-head">
+    <h2>
+      DROP 01<br>
+      <span class="acid">/ AMPLIFY</span>
+    </h2>
+    <div class="meta">
+      Four pieces. Four amplitudes.<br>
+      All-over print · 100% combed cotton<br>
+      Released 2026.05 — Limited 300 units
+    </div>
+  </div>
+
+  <div class="products-grid">
+    <div class="product">
+      <span class="product-corner">/ 01 SIGNAL</span>
+      <img src="clothes_green_replaced.png" alt="Tank · 92dB City Invasion" class="product-img">
+      <div class="product-info">
+        <div class="left">
+          <div class="code">NO-01 · CITY INVASION</div>
+          <div class="name">Tank — 92dB</div>
+          <div class="desc">All-over print · Acid green</div>
+        </div>
+        <div class="right">
+          <div class="price">¥ 488</div>
+          <div class="db">92 dB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product">
+      <span class="product-corner">/ 02 DISTORTION</span>
+      <img src="clothes_1_replaced.png" alt="Tank · 87dB Ribcage" class="product-img">
+      <div class="product-info">
+        <div class="left">
+          <div class="code">NO-02 · RIBCAGE / DUAL</div>
+          <div class="name">Tank — 87dB</div>
+          <div class="desc">All-over print · Magenta × Acid</div>
+        </div>
+        <div class="right">
+          <div class="price">¥ 488</div>
+          <div class="db">87 dB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product">
+      <span class="product-corner">/ 03 COMPRESSION</span>
+      <img src="clothes_2_replaced.png" alt="Tank · Kinetic" class="product-img">
+      <div class="product-info">
+        <div class="left">
+          <div class="code">NO-03 · KINETIC LINES</div>
+          <div class="name">Tank — Kinetic</div>
+          <div class="desc">All-over print · CMY shift</div>
+        </div>
+        <div class="right">
+          <div class="price">¥ 488</div>
+          <div class="db">+12 dB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product">
+      <span class="product-corner">/ 04 STRUCTURE</span>
+      <img src="Gemini_Generated_Image_i5u2syi5u2syi5u2.png" alt="Tank · Structure" class="product-img">
+      <div class="product-info">
+        <div class="left">
+          <div class="code">NO-04 · STRUCTURE</div>
+          <div class="name">Tank — Crystal</div>
+          <div class="desc">All-over print · Iridescent</div>
+        </div>
+        <div class="right">
+          <div class="price">¥ 488</div>
+          <div class="db">4:1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="cta">
+  <h2>
+    <span class="line">TOO LOUD</span>
+    <span class="line">TO BE CONTROLLED.</span>
+    <span class="line"><span class="acid">CONFINED.</span></span>
+    <span class="line">NOT SILENCED.</span>
+  </h2>
+  <div class="sub">DROP 01 · LIVE NOW · 300 UNITS · ZONE-07</div>
+  <a href="#" class="cta-btn">RESERVE YOUR AMPLITUDE → </a>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer" id="contact">
+  <div class="footer-top">
+    <div>
+      <img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="footer-logo">
+      <p style="font-size:13px; line-height:1.6; max-width:320px; color:var(--mute);">
+        NOISE® is a clothing studio based at Zone-07. We measure noise, confine it, and amplify it into structure.
+      </p>
+      <p style="font-size:11px; font-family:'JetBrains Mono', monospace; letter-spacing:0.2em; color:var(--acid); margin-top:16px;">
+        噪音 · 限制 · 放大 · 结构
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#drop">Drop 01 / Amplify</a></li>
+        <li><a href="#">Archive</a></li>
+        <li><a href="#">Lookbook</a></li>
+        <li><a href="#">Stockists</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#manifesto">Manifesto</a></li>
+        <li><a href="#concept">Concept</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Subscribe</h4>
+      <p style="font-size:12px; color:var(--mute); margin-bottom:14px;">
+        Frequency drops. No spam.
+      </p>
+      <div style="display:flex; border:1px solid var(--line);">
+        <input type="email" placeholder="your@noise.zone" style="flex:1; background:transparent; border:none; padding:12px; color:var(--fg); font-family:'JetBrains Mono', monospace; font-size:12px; outline:none;">
+        <button style="background:var(--acid); border:none; color:var(--bg); padding:0 18px; font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700; letter-spacing:0.15em; cursor:pointer;">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NOISE® · CONFINED AMPLITUDE</span>
+    <span class="footer-mark">// SYSTEM · 87 dB · ZONE-07</span>
+    <span>BUILT IN THE NOISE.</span>
+  </div>
+</footer>
+
+<script>
+  // Campaign film: lazy-load video on first click so the 51MB file
+  // never blocks the initial page load. Click plays with sound.
+  (function () {
+    var player = document.getElementById('filmPlayer');
+    var overlay = document.getElementById('filmOverlay');
+    if (!player) return;
+
+    player.addEventListener('click', function () {
+      // Already injected? toggle play/pause.
+      var existing = player.querySelector('video');
+      if (existing) {
+        if (existing.paused) { existing.play(); overlay.classList.add('hidden'); }
+        else { existing.pause(); overlay.classList.remove('hidden'); }
+        return;
+      }
+
+      var video = document.createElement('video');
+      video.src = player.getAttribute('data-src');
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'auto';
+      player.insertBefore(video, overlay);
+
+      // Show native controls, hide the poster overlay, play with sound.
+      overlay.classList.add('hidden');
+      var poster = player.querySelector('.film-poster');
+      if (poster) poster.style.display = 'none';
+      video.play().catch(function () {
+        // If autoplay-with-sound is blocked, the user still has controls.
+        overlay.classList.remove('hidden');
+      });
+
+      video.addEventListener('pause', function () {
+        if (!video.ended) overlay.classList.remove('hidden');
+      });
+      video.addEventListener('play', function () {
+        overlay.classList.add('hidden');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
