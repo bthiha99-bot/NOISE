@@ -1,0 +1,189 @@
+/* ============================================================
+   NOISE® — shared design system
+   used by: index.html · concept.html · evolution.html
+   ============================================================ */
+:root {
+  --bg: #0a0a0a;
+  --bg-2: #111111;
+  --fg: #f2f2f2;
+  --mute: #777777;
+  --line: #1f1f1f;
+  --acid: #a4e92f;
+  --acid-dim: #6fa31d;
+  --warn: #ff3b30;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+.mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+.acid { color: var(--acid); }
+
+/* ========== NAV ========== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px;
+  background: rgba(10,10,10,0.78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .logo { height: 22px; filter: invert(1); }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.nav-links a { transition: color 0.2s; }
+.nav-links a:hover,
+.nav-links a.active { color: var(--acid); }
+.nav-cta {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border: 1px solid var(--acid);
+  color: var(--acid);
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--acid); color: var(--bg); }
+
+/* ========== BUTTONS ========== */
+.btn {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  border: 1px solid var(--fg);
+  color: var(--fg);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn:hover { background: var(--fg); color: var(--bg); }
+.btn.primary { background: var(--acid); color: var(--bg); border-color: var(--acid); }
+.btn.primary:hover { background: transparent; color: var(--acid); }
+.btn .arrow { font-size: 14px; }
+
+/* ========== SECTION SCAFFOLD ========== */
+.section {
+  padding: 120px 64px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.section-head {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+  align-items: end;
+}
+.section-num {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--acid);
+  text-transform: uppercase;
+}
+.section-title {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* ========== FOOTER ========== */
+.footer { padding: 64px 64px 32px; background: #050505; color: var(--mute); }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--line);
+}
+.footer-logo { height: 28px; filter: invert(1); margin-bottom: 20px; }
+.footer-col h4 {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--fg);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; font-size: 13px; }
+.footer-col li a:hover { color: var(--acid); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--mute);
+  text-transform: uppercase;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-mark { color: var(--acid); }
+
+/* ========== SHARED LIGHTBOX ========== */
+.lb {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(5,5,5,0.94);
+  backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  padding: 40px; cursor: zoom-out;
+}
+.lb.open { display: flex; }
+.lb img {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);
+}
+.lb-close {
+  position: absolute; top: 24px; right: 32px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 12px; letter-spacing: 0.2em;
+  color: var(--acid); border: 1px solid var(--acid);
+  padding: 8px 14px; cursor: pointer;
+}
+
+/* ========== RESPONSIVE (shared) ========== */
+@media (max-width: 1024px) {
+  .section { padding: 96px 40px; }
+  .section-head { grid-template-columns: 1fr; gap: 16px; }
+  .section-title { font-size: 40px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .section { padding: 72px 20px; }
+  .footer { padding: 48px 20px 24px; }
+  .footer-top { grid-template-columns: 1fr; }
+}

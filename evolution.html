@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOISE® — EVOLUTION / 演进过程</title>
+<link rel="stylesheet" href="assets/noise.css">
+<style>
+  /* ---------- evolution page specific ---------- */
+  .e-hero {
+    position: relative; padding: 150px 64px 64px; overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(164,233,47,0.07), transparent 55%),
+      linear-gradient(180deg, #050505, #0c0c0c);
+  }
+  .e-kicker {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.25em; color: var(--mute); text-transform: uppercase; margin-bottom: 28px;
+  }
+  .e-kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acid); box-shadow: 0 0 12px var(--acid); }
+  .e-hero h1 {
+    font-size: clamp(48px, 8vw, 116px); font-weight: 900; line-height: 0.92;
+    letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 20px;
+  }
+  .e-hero .sub { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.3em; color: var(--acid); text-transform: uppercase; margin-bottom: 28px; }
+  .e-hero p { max-width: 620px; font-size: 15px; line-height: 1.8; color: var(--mute); }
+
+  /* timeline poster */
+  .e-poster-wrap { padding: 64px; background: #050505; border-bottom: 1px solid var(--line); }
+  .e-poster-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .e-poster-head .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em; color: var(--acid); text-transform: uppercase; }
+  .e-poster-head .hint { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--mute); text-transform: uppercase; }
+  .e-poster {
+    position: relative; border: 1px solid var(--line); background: #000;
+    cursor: zoom-in; overflow: hidden;
+  }
+  .e-poster img { width: 100%; transition: transform .5s ease; }
+  .e-poster:hover img { transform: scale(1.01); }
+  .e-poster .corner {
+    position: absolute; top: 14px; left: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em;
+    color: var(--acid); background: rgba(5,5,5,0.7); padding: 4px 8px; z-index: 2;
+  }
+
+  /* tracks */
+  .e-track { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding: 56px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .e-track:last-child { border-bottom: none; }
+  .e-track .t-label { font-family: 'JetBrains Mono', monospace; }
+  .e-track .t-label .n { font-size: 12px; letter-spacing: 0.2em; color: var(--acid); }
+  .e-track .t-label h3 { font-size: 30px; font-weight: 900; text-transform: uppercase; margin: 8px 0 6px; letter-spacing: -0.01em; color: var(--fg); line-height: 1; }
+  .e-track .t-label .cn { font-size: 12px; color: var(--mute); letter-spacing: 0.1em; }
+  .e-steps { display: flex; flex-wrap: wrap; gap: 4px; }
+  .e-node {
+    flex: 1 1 140px; min-width: 140px; background: #0b0b0b; border: 1px solid var(--line);
+    padding: 20px 18px; position: relative; transition: all .2s;
+  }
+  .e-node:hover { border-color: var(--acid); background: #0e120e; }
+  .e-node .idx { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 900; color: #1c1c1c; line-height: 1; }
+  .e-node:hover .idx { color: var(--acid-dim); }
+  .e-node .name { font-size: 13px; font-weight: 700; margin: 10px 0 6px; text-transform: uppercase; letter-spacing: 0.02em; }
+  .e-node .desc { font-size: 11.5px; line-height: 1.55; color: var(--mute); }
+
+  /* cross links */
+  .e-next { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 0 64px 96px; }
+  .e-next a { display: block; padding: 56px 48px; background: #0b0b0b; border: 1px solid var(--line); transition: all .25s; }
+  .e-next a:hover { background: #101510; border-color: var(--acid); }
+  .e-next .k { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--acid); margin-bottom: 12px; }
+  .e-next .t { font-size: 30px; font-weight: 900; text-transform: uppercase; }
+  .e-next .t .arrow { color: var(--acid); }
+  .e-next p { font-size: 14px; line-height: 1.6; color: var(--mute); margin-top: 10px; }
+
+  @media (max-width: 1024px) {
+    .e-hero { padding: 120px 40px 56px; }
+    .e-poster-wrap { padding: 40px; }
+    .e-track { grid-template-columns: 1fr; gap: 24px; }
+    .e-next { grid-template-columns: 1fr; padding: 0 40px 72px; }
+  }
+  @media (max-width: 640px) {
+    .e-hero { padding: 100px 20px 48px; }
+    .e-poster-wrap { padding: 20px; }
+    .e-next { padding: 0 20px 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav">
+  <a href="index.html"><img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="logo"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="concept.html">Concept</a>
+    <a href="evolution.html" class="active">Evolution</a>
+    <a href="index.html#system">System</a>
+  </div>
+  <a href="index.html#system" class="nav-cta">Shop / 购买</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="e-hero">
+  <div class="e-kicker"><span class="dot"></span><span>BRAND EVOLUTION · 2026 ARCHIVE</span></div>
+  <h1>EVOLUTION.</h1>
+  <div class="sub">// 演进过程 — from wordmark to structure</div>
+  <p>
+    NOISE 的视觉从一个小写字标，一路演化为结构化的「分裂 I」标志系统；
+    图形从热力纹理走向算法印花；印花从城市解剖走向荧光骨架成衣。
+    这是品牌把「噪音」放大成「结构」的完整轨迹。
+  </p>
+</header>
+
+<!-- ==================== TIMELINE POSTER ==================== -->
+<div class="e-poster-wrap">
+  <div class="e-poster-head">
+    <span class="label">/ MASTER TIMELINE — LOGO · GRAPHIC · PRINT</span>
+    <span class="hint">CLICK TO ENLARGE ↗</span>
+  </div>
+  <div class="e-poster" id="poster" data-full="assets/evolution/add-01.jpg">
+    <span class="corner">● 演进过程 / STRUCTURAL NOISE SYSTEM</span>
+    <img src="assets/evolution/add-01.jpg" alt="NOISE 演进过程 timeline">
+  </div>
+</div>
+
+<!-- ==================== TRACKS ==================== -->
+<section class="section" style="padding-top:80px;">
+  <div class="section-head"><div class="section-num">/ BREAKDOWN — THREE TRACKS</div></div>
+
+  <!-- Track A: Logo -->
+  <div class="e-track">
+    <div class="t-label">
+      <div class="n">TRACK A</div>
+      <h3>Logo</h3>
+      <div class="cn">字标演进 · 7 步</div>
+    </div>
+    <div class="e-steps">
+      <div class="e-node"><div class="idx">1</div><div class="name">noïse</div><div class="desc">小写字标，柔和起点。</div></div>
+      <div class="e-node"><div class="idx">2</div><div class="name">NOISE · Target O</div><div class="desc">大写化，O 化作靶心/声波。</div></div>
+      <div class="e-node"><div class="idx">3</div><div class="name">Glitch</div><div class="desc">蓝色故障，引入噪声质感。</div></div>
+      <div class="e-node"><div class="idx">4</div><div class="name">Split Mark</div><div class="desc">抽象出「分裂方块 I」图标。</div></div>
+      <div class="e-node"><div class="idx">5</div><div class="name">Camo Split</div><div class="desc">黑白迷彩，结构对撞。</div></div>
+      <div class="e-node"><div class="idx">6</div><div class="name">Icon + Word</div><div class="desc">图标与字标组合锁定。</div></div>
+      <div class="e-node"><div class="idx">7</div><div class="name">NOÏSE Stack</div><div class="desc">最终堆叠字标 + 结构 I。</div></div>
+    </div>
+  </div>
+
+  <!-- Track B: Graphic -->
+  <div class="e-track">
+    <div class="t-label">
+      <div class="n">TRACK B</div>
+      <h3>Graphic</h3>
+      <div class="cn">图形演进 · 5 步</div>
+    </div>
+    <div class="e-steps">
+      <div class="e-node"><div class="idx">1</div><div class="name">Heat Grid</div><div class="desc">热力图网格，能量原型。</div></div>
+      <div class="e-node"><div class="idx">2</div><div class="name">Cell Motifs</div><div class="desc">细胞/几何母题图库。</div></div>
+      <div class="e-node"><div class="idx">3</div><div class="name">Texture</div><div class="desc">混凝土/噪声纹理基底。</div></div>
+      <div class="e-node"><div class="idx">4</div><div class="name">Print Test</div><div class="desc">图形上身，T 恤打样。</div></div>
+      <div class="e-node"><div class="idx">5</div><div class="name">Anatomy</div><div class="desc">解剖式骨架图形成型。</div></div>
+    </div>
+  </div>
+
+  <!-- Track C: Print -->
+  <div class="e-track">
+    <div class="t-label">
+      <div class="n">TRACK C</div>
+      <h3>Print</h3>
+      <div class="cn">印花演进 · 收束成衣</div>
+    </div>
+    <div class="e-steps">
+      <div class="e-node"><div class="idx">6</div><div class="name">Urban Anatomy</div><div class="desc">「The Floaters」城市解剖印花。</div></div>
+      <div class="e-node"><div class="idx">7</div><div class="name">Energy Imprint</div><div class="desc">人体能量印记，色彩注入。</div></div>
+      <div class="e-node"><div class="idx">8</div><div class="name">Neon Ribcage</div><div class="desc">荧光肋骨，多色系列扩展。</div></div>
+      <div class="e-node"><div class="idx">★</div><div class="name">Final Tanks</div><div class="desc">收束为 City Invasion 成衣。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CROSS LINKS ==================== -->
+<div class="e-next">
+  <a href="concept.html">
+    <div class="k">/ BACK — 01</div>
+    <div class="t"><span class="arrow">←</span> CONCEPT</div>
+    <p>理念、柏林噪声算法、Beeple 灵感与数字孪生。</p>
+  </a>
+  <a href="index.html#system">
+    <div class="k">/ SHOP — PERFORMANCE</div>
+    <div class="t">THE SYSTEM <span class="arrow">→</span></div>
+    <p>17 款落地产品 · 4 大分类 · 60–92 dB。</p>
+  </a>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="footer-logo">
+      <p style="font-size:13px; line-height:1.6; max-width:320px; color:var(--mute);">
+        NOISE® — from wordmark to structure. The full trace of amplifying noise into form.
+      </p>
+      <p style="font-size:11px; font-family:'JetBrains Mono', monospace; letter-spacing:0.2em; color:var(--acid); margin-top:16px;">
+        字标 · 图形 · 印花 · 结构
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home / 主页</a></li>
+        <li><a href="concept.html">Concept / 理念</a></li>
+        <li><a href="evolution.html">Evolution / 演进</a></li>
+        <li><a href="index.html#system">System / 系列</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Tracks</h4>
+      <ul>
+        <li><a href="#">Logo / 字标</a></li>
+        <li><a href="#">Graphic / 图形</a></li>
+        <li><a href="#">Print / 印花</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="index.html#contact">Studio</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Stockists</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NOISE® · BRAND EVOLUTION</span>
+    <span class="footer-mark">// MAKE NOISE WITHIN LIMITS</span>
+    <span>BUILT IN THE NOISE.</span>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lightbox">
+  <div class="lb-close" id="lbClose">CLOSE ✕</div>
+  <img id="lbImg" src="" alt="evolution timeline">
+</div>
+
+<script>
+  (function () {
+    var poster = document.getElementById('poster');
+    var lb = document.getElementById('lightbox');
+    var img = document.getElementById('lbImg');
+    if (!poster || !lb) return;
+    poster.addEventListener('click', function () {
+      img.src = poster.getAttribute('data-full');
+      lb.classList.add('open');
+    });
+    function close() { lb.classList.remove('open'); }
+    document.getElementById('lbClose').addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  })();
+</script>
+
+</body>
+</html>

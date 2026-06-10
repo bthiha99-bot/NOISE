@@ -60,7 +60,8 @@
   .nav-links a {
     transition: color 0.2s;
   }
-  .nav-links a:hover {
+  .nav-links a:hover,
+  .nav-links a.active {
     color: var(--acid);
   }
   .nav-cta {
@@ -1073,15 +1074,12 @@
 
 <!-- ==================== NAV ==================== -->
 <nav class="nav">
-  <img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="logo">
+  <a href="index.html"><img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="logo"></a>
   <div class="nav-links">
-    <a href="#manifesto">Manifesto</a>
-    <a href="#concept">Concept</a>
-    <a href="#film">Film</a>
-    <a href="#lookbook">Lookbook</a>
-    <a href="#drop">Drop 01</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="concept.html">Concept</a>
+    <a href="evolution.html">Evolution</a>
     <a href="#system">System</a>
-    <a href="#contact">Contact</a>
   </div>
   <a href="#drop" class="nav-cta">Shop / 购买</a>
 </nav>
@@ -1110,7 +1108,7 @@
       </p>
       <div class="hero-cta-row">
         <a href="#drop" class="btn primary">Enter Drop 01 <span class="arrow">→</span></a>
-        <a href="#manifesto" class="btn">Read Manifesto</a>
+        <a href="concept.html" class="btn">The Concept / 理念</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -1578,10 +1576,10 @@
     <div class="footer-col">
       <h4>Studio</h4>
       <ul>
+        <li><a href="concept.html">Concept / 理念</a></li>
+        <li><a href="evolution.html">Evolution / 演进</a></li>
         <li><a href="#manifesto">Manifesto</a></li>
-        <li><a href="#concept">Concept</a></li>
         <li><a href="#">Press</a></li>
-        <li><a href="#">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">

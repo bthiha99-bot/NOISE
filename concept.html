@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOISE® — CONCEPT / 理念 · 灵感</title>
+<link rel="stylesheet" href="assets/noise.css">
+<style>
+  /* ---------- concept page specific ---------- */
+  .c-hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    padding: 140px 64px 80px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .c-hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba(164,233,47,0.08), transparent 55%),
+      linear-gradient(180deg, #050505, #0c0c0c);
+  }
+  .c-hero-grid {
+    position: absolute; inset: 0; z-index: 1;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .c-hero-inner { position: relative; z-index: 2; max-width: 1100px; }
+  .c-kicker {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em; color: var(--mute);
+    text-transform: uppercase; margin-bottom: 36px;
+  }
+  .c-kicker .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--acid); box-shadow: 0 0 12px var(--acid);
+    animation: cpulse 2s ease-in-out infinite;
+  }
+  @keyframes cpulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .c-hero h1 {
+    font-size: clamp(52px, 9vw, 132px);
+    font-weight: 900; line-height: 0.92;
+    letter-spacing: -0.03em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .c-hero h1 .ln { display: block; }
+  .c-hero-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; letter-spacing: 0.3em; color: var(--acid);
+    text-transform: uppercase; margin-bottom: 40px;
+  }
+  .c-hero-statement {
+    max-width: 640px; font-size: 22px; line-height: 1.5;
+    color: var(--fg); margin-bottom: 14px; font-weight: 300;
+  }
+  .c-hero-statement b { color: var(--acid); font-weight: 600; }
+  .c-hero-cn { max-width: 560px; font-size: 14px; line-height: 1.8; color: var(--mute); margin-bottom: 44px; }
+  .c-hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* statement / manifesto block */
+  .c-block { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  .c-h2 {
+    font-size: clamp(34px, 5vw, 60px); font-weight: 900;
+    line-height: 1.04; letter-spacing: -0.02em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .c-lead { font-size: 17px; line-height: 1.6; color: var(--fg); margin-bottom: 20px; }
+  .c-cn { font-size: 14px; line-height: 1.95; color: var(--mute); }
+  .c-cn + .c-cn { margin-top: 16px; }
+  .c-quote-bar { border-left: 2px solid var(--acid); padding-left: 22px; }
+
+  /* visual element tags */
+  .c-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .c-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.08em; color: var(--fg);
+    border: 1px solid var(--line); padding: 10px 16px;
+    background: #0c0c0c; transition: all .2s;
+  }
+  .c-tag:hover { border-color: var(--acid); color: var(--acid); }
+  .c-tag .en { color: var(--mute); margin-left: 8px; font-size: 10px; }
+
+  /* algorithm formula strip */
+  .c-formula {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+    font-family: 'JetBrains Mono', monospace; margin-top: 36px;
+    padding: 24px; border: 1px solid var(--line); background: #080808;
+  }
+  .c-formula .f { color: var(--fg); font-size: 13px; letter-spacing: 0.05em; }
+  .c-formula .f .k { color: var(--acid); display: block; font-size: 11px; margin-top: 4px; color: var(--mute); }
+  .c-formula .op { color: var(--acid); font-size: 20px; }
+
+  /* four base layers */
+  .c-layers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .c-layer { background: #0c0c0c; padding: 28px 24px 32px; position: relative; min-height: 260px; display: flex; flex-direction: column; }
+  .c-layer .swatch { height: 80px; margin-bottom: 22px; border: 1px solid rgba(255,255,255,0.08); }
+  .c-layer .sw1 { background: linear-gradient(135deg,#3a3a3a,#6b6b6b,#2a2a2a); }
+  .c-layer .sw2 { background: linear-gradient(120deg,#00e5ff,#a4e92f,#ff00d4); filter: blur(1px); }
+  .c-layer .sw3 { background: radial-gradient(circle at 30% 40%,#ff7a00,#ff2e63,#5b00ff,#1a1a2e); }
+  .c-layer .sw4 { background: repeating-linear-gradient(45deg,#0a3d1a 0 6px,#a4e92f 6px 8px,#062b12 8px 16px); }
+  .c-layer .idx { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--acid); letter-spacing: 0.2em; margin-bottom: 8px; }
+  .c-layer h3 { font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 4px; }
+  .c-layer .cnname { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mute); margin-bottom: 14px; }
+  .c-layer p { font-size: 12.5px; line-height: 1.6; color: var(--mute); }
+
+  /* split: industrial vs soul */
+  .c-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .c-split > div { padding: 48px 40px; background: #0b0b0b; }
+  .c-split .soul { background: #0e0e0e; }
+  .c-split .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em; color: var(--acid); margin-bottom: 18px; text-transform: uppercase; }
+  .c-split h3 { font-size: 28px; font-weight: 900; text-transform: uppercase; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .c-split p { font-size: 14px; line-height: 1.75; color: var(--mute); }
+  .c-split ul { list-style: none; margin-top: 18px; }
+  .c-split li { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--fg); padding: 9px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+  .c-split li::before { content: "// "; color: var(--acid); }
+
+  /* digital twin */
+  .c-twin { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .c-twin-card { border: 1px solid var(--line); background: #080808; padding: 36px; }
+  .c-twin-card .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--acid); margin-bottom: 24px; }
+  .c-meter { font-family: 'JetBrains Mono', monospace; }
+  .c-meter .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--mute); letter-spacing: 0.08em; }
+  .c-meter .row .v { color: var(--acid); }
+  .c-bar { height: 8px; background: #161616; margin-top: 6px; overflow: hidden; }
+  .c-bar span { display: block; height: 100%; background: linear-gradient(90deg,var(--acid-dim),var(--acid)); }
+
+  /* sequence A/B/C */
+  .c-seq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .c-step { position: relative; border: 1px solid var(--line); background: #0b0b0b; padding: 32px 28px; overflow: hidden; }
+  .c-step .no { font-size: 64px; font-weight: 900; color: #161616; line-height: 1; }
+  .c-step .seq { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--acid); margin: 8px 0 16px; }
+  .c-step h4 { font-size: 18px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
+  .c-step p { font-size: 13px; line-height: 1.65; color: var(--mute); }
+  .c-step .density { display: flex; gap: 4px; margin-top: 20px; }
+  .c-step .density i { flex: 1; height: 6px; background: #1c1c1c; }
+  .c-step.s1 .density i:nth-child(-n+2) { background: var(--acid-dim); }
+  .c-step.s2 .density i:nth-child(-n+4) { background: var(--acid-dim); }
+  .c-step.s3 .density i { background: var(--acid); }
+
+  /* quotes */
+  .c-quotes { display: grid; gap: 28px; }
+  .c-quote {
+    font-size: clamp(22px, 3.4vw, 40px); font-weight: 800; line-height: 1.25;
+    letter-spacing: -0.01em; color: var(--fg);
+    padding: 28px 0; border-top: 1px solid var(--line);
+  }
+  .c-quote .acid { color: var(--acid); }
+  .c-quote .en { display: block; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 400; letter-spacing: 0.15em; color: var(--mute); margin-top: 14px; text-transform: uppercase; }
+
+  /* pagelink footer band */
+  .c-next { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .c-next a {
+    display: block; padding: 56px 48px; background: #0b0b0b; border: 1px solid var(--line);
+    transition: all .25s; position: relative;
+  }
+  .c-next a:hover { background: #101510; border-color: var(--acid); }
+  .c-next .k { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--acid); margin-bottom: 12px; }
+  .c-next .t { font-size: 30px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
+  .c-next .t .arrow { color: var(--acid); }
+
+  @media (max-width: 1024px) {
+    .c-block, .c-twin { grid-template-columns: 1fr; gap: 40px; }
+    .c-layers { grid-template-columns: repeat(2, 1fr); }
+    .c-seq { grid-template-columns: 1fr; }
+    .c-split { grid-template-columns: 1fr; }
+    .c-next { grid-template-columns: 1fr; }
+    .c-hero { padding: 120px 40px 64px; }
+  }
+  @media (max-width: 640px) {
+    .c-hero { padding: 100px 20px 48px; }
+    .c-layers { grid-template-columns: 1fr; }
+    .c-hero-statement { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav">
+  <a href="index.html"><img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="logo"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="concept.html" class="active">Concept</a>
+    <a href="evolution.html">Evolution</a>
+    <a href="index.html#system">System</a>
+  </div>
+  <a href="index.html#system" class="nav-cta">Shop / 购买</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="c-hero">
+  <div class="c-hero-bg"></div>
+  <div class="c-hero-grid"></div>
+  <div class="c-hero-inner">
+    <div class="c-kicker"><span class="dot"></span><span>CONCEPT · INSPIRATION · ALGORITHM</span></div>
+    <h1>
+      <span class="ln">RUNNING</span>
+      <span class="ln"><span class="acid">NOISE.</span></span>
+    </h1>
+    <div class="c-hero-sub">// 奔跑的喧哗 — make your noise different.</div>
+    <p class="c-hero-statement">
+      The world is too quiet.<br>
+      <b>Go make some noise.</b>
+    </p>
+    <p class="c-hero-cn">
+      「这个世界太安静了，去跑出点动静来。」<br>
+      NOISE 把社会的压抑与死板秩序比作安静，用噪音指代生命力——
+      在工业化生产与独特灵魂之间，寻找平衡。
+    </p>
+    <div class="c-hero-cta">
+      <a href="#manifesto" class="btn primary">Read the Idea <span class="arrow">↓</span></a>
+      <a href="evolution.html" class="btn">Evolution / 演进 <span class="arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== 01 MANIFESTO ==================== -->
+<section class="section" id="manifesto">
+  <div class="section-head"><div class="section-num">/ 01 — IDEA / 理念</div></div>
+  <div class="c-block">
+    <div>
+      <h2 class="c-h2">SILENCE IS<br>THE REAL<br><span class="acid">NOISE.</span></h2>
+      <p class="c-lead">Order is silence. Life is noise. We don't remove it — we amplify it.</p>
+    </div>
+    <div class="c-quote-bar">
+      <p class="c-cn">NOISE 是一个中高端潮流运动品牌。我们把<b style="color:var(--fg)">社会的压抑与死板的秩序</b>比作「安静」，用<b style="color:var(--acid)">噪音（noise）</b>指代生命力。</p>
+      <p class="c-cn">产品注重「随机性」与「个性化」，在<b style="color:var(--fg)">工业化生产</b>与<b style="color:var(--fg)">独特灵魂</b>之间寻找平衡——整个系列表达同一种风格，而每一件衣服都独一无二。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 02 ALGORITHM ==================== -->
+<section class="section" style="background:#080808;">
+  <div class="section-head"><div class="section-num">/ 02 — THE ALGORITHM / 算法之肤</div></div>
+  <div class="c-block">
+    <div>
+      <h2 class="c-h2">PERLIN NOISE<br>AS SKIN.</h2>
+      <p class="c-cn">以「这是生产的第几件衣服」作为<b style="color:var(--acid)">唯一种子值（seed）</b>，用<b style="color:var(--fg)">柏林噪声算法</b>决定面料颜色（颜色取自指定色卡）的分布，并抽取视觉元素排列组合。每一件都由数学随机生成，独一无二。</p>
+      <div class="c-formula">
+        <div class="f">SERIAL #<span class="k">序列号 → 种子</span></div>
+        <div class="op">→</div>
+        <div class="f">PERLIN NOISE<span class="k">柏林噪声 → 分布</span></div>
+        <div class="op">→</div>
+        <div class="f">COLOR CARD<span class="k">指定色卡 → 取色</span></div>
+        <div class="op">=</div>
+        <div class="f" style="color:var(--acid)">1 / 1 UNIQUE<span class="k">独一无二</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="c-lead">Visual Elements / 视觉元素库</p>
+      <p class="c-cn">算法从一组母题中抽取、排列、叠加，构成每件衣服的图形皮肤：</p>
+      <div class="c-tags">
+        <span class="c-tag">细胞壁纹理<span class="en">CELL WALL</span></span>
+        <span class="c-tag">电路脉冲<span class="en">CIRCUIT PULSE</span></span>
+        <span class="c-tag">条形码<span class="en">BARCODE</span></span>
+        <span class="c-tag">管状珊瑚<span class="en">TUBE CORAL</span></span>
+        <span class="c-tag">叶脉<span class="en">LEAF VEIN</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 03 INSPIRATION ==================== -->
+<section class="section">
+  <div class="section-head"><div class="section-num">/ 03 — INSPIRATION / 灵感碰撞</div></div>
+  <div class="c-block">
+    <div>
+      <h2 class="c-h2">BEEPLE ×<br>NOISE.</h2>
+      <p class="c-lead">《Growth / 指数生长》 — technology as an extension of nature.</p>
+      <p class="c-cn">Beeple 的《指数生长》探讨<b style="color:var(--fg)">技术作为自然的延伸</b>，核心是「动态生成」「超高密度细节」与「指数级进化」。</p>
+    </div>
+    <div class="c-quote-bar">
+      <p class="c-cn">而 NOISE 探讨的是「打破沉静（秩序）」「个性化（随机性）」与「工业与灵魂的平衡」。</p>
+      <p class="c-cn">两者的契合点在于：把<b style="color:var(--acid)">跑步</b>视为一种打破静止、注入生命力的「Noise」，而把<b style="color:var(--acid)">算法生成</b>作为实现每件装备独一无二、且具有「指数级生命力」的技术手段。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04 FOUR BASE LAYERS ==================== -->
+<section class="section" style="background:#080808;">
+  <div class="section-head">
+    <div class="section-num">/ 04 — BASE LAYERS / 四大基底</div>
+  </div>
+  <p class="c-cn" style="max-width:680px; margin-bottom:40px;">
+    每件衣服的图案由 4 个代表不同跑步环境/状态的「基底纹理」，以不同权重（透明度）在数百万像素点上随机混合叠加而成。
+    <b style="color:var(--fg)">序列号</b>决定演化阶段，<b style="color:var(--fg)">柏林噪声</b>决定各基底在袖子、前胸、后背的涌现概率。
+  </p>
+  <div class="c-layers">
+    <div class="c-layer">
+      <div class="swatch sw1"></div>
+      <div class="idx">BASE 01</div>
+      <h3>Urban Concrete</h3>
+      <div class="cnname">混凝土</div>
+      <p>灰色调，几何切片。代表城市死板的秩序。</p>
+    </div>
+    <div class="c-layer">
+      <div class="swatch sw2"></div>
+      <div class="idx">BASE 02</div>
+      <h3>Motion Blur</h3>
+      <div class="cnname">瞬时速度</div>
+      <p>霓虹色调，拉伸的线条。代表速度。</p>
+    </div>
+    <div class="c-layer">
+      <div class="swatch sw3"></div>
+      <div class="idx">BASE 03</div>
+      <h3>Biometric Heat</h3>
+      <div class="cnname">热力</div>
+      <p>橙红蓝紫，云雾状。代表身体的能量释放。</p>
+    </div>
+    <div class="c-layer">
+      <div class="swatch sw4"></div>
+      <div class="idx">BASE 04</div>
+      <h3>Glitch Nature</h3>
+      <div class="cnname">数字自然</div>
+      <p>故障风的植物纹理，致敬 Beeple。代表技术演进的自然。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05 INDUSTRIAL vs SOUL ==================== -->
+<section class="section">
+  <div class="section-head"><div class="section-num">/ 05 — INDUSTRIAL × SOUL / 工业与灵魂</div></div>
+  <div class="c-split">
+    <div>
+      <div class="tag">// THE SKELETON</div>
+      <h3>统一的骨架</h3>
+      <p>所有衣服采用相同的高科技、符合人体工学的剪裁结构。这是「工业化生产」的秩序部分。</p>
+      <ul>
+        <li>激光切割透气孔</li>
+        <li>无缝压胶工艺</li>
+        <li>人体工学剪裁</li>
+      </ul>
+    </div>
+    <div class="soul">
+      <div class="tag">// THE SKIN</div>
+      <h3>随机的皮肤</h3>
+      <p>所有颜色与纹理通过数码直喷（DTG），将算法生成的、独一无二的图案印制在骨架上。这是「独特灵魂」的部分。</p>
+      <ul>
+        <li>DTG 数码直喷</li>
+        <li>算法生成图案</li>
+        <li>1 / 1 不可复制</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06 DIGITAL TWIN ==================== -->
+<section class="section" style="background:#080808;">
+  <div class="section-head"><div class="section-num">/ 06 — DIGITAL TWIN / 动态生成 · NFT</div></div>
+  <div class="c-twin">
+    <div>
+      <h2 class="c-h2">A LIVING<br><span class="acid">GARMENT.</span></h2>
+      <p class="c-cn">每一件实体跑步服都附带一个<b style="color:var(--acid)">可进化的 NFT 数字孪生</b>。实体衣服上的图案，是跑者收到货那一刻的「冻结快照」（例如 088 号状态）。</p>
+      <p class="c-cn">对应的 NFT 则像《指数生长》一样，是基于算法实时生成、永远在变化的动态影像——拥有者能在手机上看到自己的「衣服」在数码世界里不断生长、绽放、凋谢，象征跑者不断挑战自我、代谢旧我的过程。</p>
+      <p class="c-cn"><b style="color:var(--fg)">数据驱动（进阶）：</b>与跑步 APP（如 Strava）打通。跑得越快、里程越多，NFT 图案进化得越繁茂、越复杂；长期不跑，图案会趋于凋谢，回到基底 1 的混凝土状态。</p>
+    </div>
+    <div class="c-twin-card">
+      <div class="label">● LIVE · DIGITAL TWIN #088</div>
+      <div class="c-meter">
+        <div class="row"><span>GROWTH STAGE</span><span class="v">EXPONENTIAL</span></div>
+        <div class="c-bar"><span style="width:82%"></span></div>
+        <div class="row" style="margin-top:14px;"><span>WEEKLY DISTANCE</span><span class="v">62.4 KM</span></div>
+        <div class="c-bar"><span style="width:74%"></span></div>
+        <div class="row" style="margin-top:14px;"><span>PATTERN DENSITY</span><span class="v">HIGH</span></div>
+        <div class="c-bar"><span style="width:91%"></span></div>
+        <div class="row" style="margin-top:14px;"><span>SNAPSHOT</span><span class="v">FROZEN · 088</span></div>
+        <div class="row"><span>STATE</span><span class="v">BLOOMING</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 07 SEQUENCE A/B/C ==================== -->
+<section class="section">
+  <div class="section-head"><div class="section-num">/ 07 — THE SEQUENCE / 序列演化</div></div>
+  <p class="c-cn" style="max-width:680px; margin-bottom:40px;">
+    一排看似风格统一、细节却完全不同的跑步 T 恤。随着序列号推进，图案从冷静走向「Exponential Growth 指数生长」——生命力彻底爆发。
+  </p>
+  <div class="c-seq">
+    <div class="c-step s1">
+      <div class="no">A</div>
+      <div class="seq">SERIAL · EARLY</div>
+      <h4>秩序 / Order</h4>
+      <p>图案简约，冷色调。代表刚开始跑步，秩序的力量还很强。</p>
+      <div class="density"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="c-step s2">
+      <div class="no">B</div>
+      <div class="seq">SERIAL · MID</div>
+      <h4>打破 / Breaking</h4>
+      <p>图案开始复杂，冷暖色调交织。代表打破秩序的过程。</p>
+      <div class="density"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="c-step s3">
+      <div class="no">C</div>
+      <div class="seq">SERIAL · LATE</div>
+      <h4>爆发 / Growth</h4>
+      <p>图案极其复杂、高密度、色彩疯狂。达到「指数生长」状态，生命力彻底爆发。</p>
+      <div class="density"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 08 VOICES ==================== -->
+<section class="section" style="background:#050505;">
+  <div class="section-head"><div class="section-num">/ 08 — VOICES / 品牌文案</div></div>
+  <div class="c-quotes">
+    <div class="c-quote">「这个世界太安静了，去跑出点<span class="acid">动静</span>来。」
+      <span class="en">The world is too quiet — go make some noise.</span>
+    </div>
+    <div class="c-quote"><span class="acid">NOISE 1024</span>：不仅是一件衣服，更是你动能的算法切片。
+      <span class="en">Not just apparel — an algorithmic slice of your kinetic energy.</span>
+    </div>
+    <div class="c-quote">经典静物在动静无尽中转化为动态体验；NOISE 将你的奔跑转化为<span class="acid">独一无二的生命算法</span>。
+      <span class="en">We turn your run into a one-of-one living algorithm.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NEXT / CROSS-LINKS ==================== -->
+<section class="section" style="padding-top:0; border-bottom:none;">
+  <div class="c-next">
+    <a href="evolution.html">
+      <div class="k">/ NEXT — 02</div>
+      <div class="t">EVOLUTION <span class="arrow">→</span></div>
+      <p class="c-cn" style="margin-top:10px;">看 logo、图形与印花的演进时间线。</p>
+    </a>
+    <a href="index.html#system">
+      <div class="k">/ SHOP — PERFORMANCE</div>
+      <div class="t">THE SYSTEM <span class="arrow">→</span></div>
+      <p class="c-cn" style="margin-top:10px;">17 款落地产品 · 4 大分类 · 60–92 dB。</p>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <img src="屏幕截图_13-5-2026_14737_.jpeg" alt="NOISE" class="footer-logo">
+      <p style="font-size:13px; line-height:1.6; max-width:320px; color:var(--mute);">
+        NOISE® — silence is the real noise. We turn order into life, and runs into one-of-one living algorithms.
+      </p>
+      <p style="font-size:11px; font-family:'JetBrains Mono', monospace; letter-spacing:0.2em; color:var(--acid); margin-top:16px;">
+        随机 · 个性 · 工业 · 灵魂
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home / 主页</a></li>
+        <li><a href="concept.html">Concept / 理念</a></li>
+        <li><a href="evolution.html">Evolution / 演进</a></li>
+        <li><a href="index.html#system">System / 系列</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Concept</h4>
+      <ul>
+        <li><a href="#manifesto">The Idea</a></li>
+        <li><a href="#">Perlin Noise</a></li>
+        <li><a href="#">Beeple × Noise</a></li>
+        <li><a href="#">Digital Twin</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="index.html#contact">Studio</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Stockists</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NOISE® · RUNNING NOISE</span>
+    <span class="footer-mark">// MAKE NOISE WITHIN LIMITS</span>
+    <span>BUILT IN THE NOISE.</span>
+  </div>
+</footer>
+
+</body>
+</html>
