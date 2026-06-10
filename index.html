@@ -701,6 +701,236 @@
     font-weight: 700;
   }
 
+  /* ========== PERFORMANCE SYSTEM ========== */
+  .system {
+    background: #080808;
+    padding: 120px 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  .system-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 24px;
+  }
+  .system-head h2 {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .system-head h2 .acid { color: var(--acid); }
+  .system-head .meta {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .system-tagline {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 64px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* category index */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 96px;
+  }
+  .cat {
+    background: #0c0c0c;
+    padding: 28px 24px 32px;
+  }
+  .cat-title {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .cat-title .en {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .cat-title .cn {
+    font-size: 12px;
+    color: var(--mute);
+    letter-spacing: 0.1em;
+  }
+  .cat-title .acid { color: var(--acid); }
+  .cat-item {
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.07);
+  }
+  .cat-item:last-child { border-bottom: none; }
+  .cat-item .name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--fg);
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .cat-item .db {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--acid);
+    white-space: nowrap;
+  }
+  .cat-item .spec {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--mute);
+  }
+
+  /* catalog gallery */
+  .catalog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 32px;
+  }
+  .catalog-head .label {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--acid);
+    text-transform: uppercase;
+  }
+  .catalog-head .hint {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+    text-transform: uppercase;
+  }
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .cat-page {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--line);
+    cursor: zoom-in;
+    aspect-ratio: 1273 / 1800;
+  }
+  .cat-page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease, opacity 0.3s;
+  }
+  .cat-page:hover img { transform: scale(1.03); }
+  .cat-page .pg-tag {
+    position: absolute;
+    top: 10px; left: 10px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--acid);
+    background: rgba(5,5,5,0.7);
+    padding: 3px 7px;
+    z-index: 2;
+  }
+  .cat-page .pg-cap {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 10px 10px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    text-transform: uppercase;
+    background: linear-gradient(transparent, rgba(5,5,5,0.92));
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cat-page:hover .pg-cap { opacity: 1; }
+
+  /* lightbox */
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(5,5,5,0.94);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: zoom-out;
+  }
+  .lb.open { display: flex; }
+  .lb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+  }
+  .lb-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--acid);
+    border: 1px solid var(--acid);
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    color: var(--fg);
+    cursor: pointer;
+    padding: 16px 20px;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  .lb-nav:hover { color: var(--acid); }
+  .lb-prev { left: 16px; }
+  .lb-next { right: 16px; }
+  .lb-count {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mute);
+  }
+  .lb-count .c { color: var(--acid); }
+
   /* ========== CTA ========== */
   .cta {
     padding: 160px 64px;
@@ -810,13 +1040,21 @@
     .products-grid { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr 1fr; }
     .section-head { grid-template-columns: 1fr; gap: 16px; }
-    .section-title, .manifesto-text h2, .lookbook-head h2, .products-head h2, .film-head h2 { font-size: 40px; }
+    .section-title, .manifesto-text h2, .lookbook-head h2, .products-head h2, .film-head h2, .system-head h2 { font-size: 40px; }
     .film-head { flex-direction: column; align-items: flex-start; gap: 16px; }
     .film-head .meta { text-align: left; }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+    .system-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .system-head .meta { text-align: left; }
   }
   @media (max-width: 640px) {
     .film { padding: 80px 20px; }
     .film-play-btn { width: 64px; height: 64px; }
+    .system { padding: 80px 20px; }
+    .cat-grid { grid-template-columns: 1fr; }
+    .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+    .lb-nav { padding: 10px 12px; font-size: 24px; }
     .nav { padding: 14px 20px; }
     .nav-links { display: none; }
     .hero { padding: 100px 20px 48px; }
@@ -842,6 +1080,7 @@
     <a href="#film">Film</a>
     <a href="#lookbook">Lookbook</a>
     <a href="#drop">Drop 01</a>
+    <a href="#system">System</a>
     <a href="#contact">Contact</a>
   </div>
   <a href="#drop" class="nav-cta">Shop / 购买</a>
@@ -1123,6 +1362,186 @@
   </div>
 </section>
 
+<!-- ==================== PERFORMANCE SYSTEM ==================== -->
+<section class="system" id="system">
+  <div class="system-head">
+    <h2>
+      PERFORMANCE<br>
+      <span class="acid">SYSTEM.</span>
+    </h2>
+    <div class="meta">
+      / 05 — APPAREL SYSTEM<br>
+      17 PRODUCTS · 4 CATEGORIES<br>
+      60 — 92 dB · ZONE-07
+    </div>
+  </div>
+  <div class="system-tagline">// MAKE NOISE WITHIN LIMITS — make your noise different.</div>
+
+  <!-- category index -->
+  <div class="cat-grid">
+    <div class="cat">
+      <div class="cat-title"><span class="en">Tops</span><span class="cn">/ 上装</span></div>
+      <div class="cat-item">
+        <div class="name">City Invasion Tank <span class="db">92dB</span></div>
+        <div class="spec">WHITE WASHED · REGULAR · ~180g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">City Invasion Tank <span class="db">87dB</span></div>
+        <div class="spec">WHITE WASHED · REGULAR · ~160g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">City Invasion Tee <span class="db">92dB</span></div>
+        <div class="spec">BLACK WASHED · OVERSIZED · ~240g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">City Invasion Tee <span class="db">87dB</span></div>
+        <div class="spec">BLACK WASHED · OVERSIZED · ~240g</div>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-title"><span class="en">Outerwear</span><span class="cn">/ 外套</span></div>
+      <div class="cat-item">
+        <div class="name">Confinement Shell <span class="db">72dB</span></div>
+        <div class="spec">BLACK / NEON · REGULAR · ~128g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Aero Shell <span class="db">65dB</span></div>
+        <div class="spec">GREY / NEON · SLIM · ~118g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Sports Skin Jacket <span class="db">92dB</span></div>
+        <div class="spec">WHITE / PRINT · REGULAR · ~220g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Sports Skin Hoodie <span class="db">87dB</span></div>
+        <div class="spec">WHITE / PRINT · REGULAR · ~230g</div>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-title"><span class="en">Bottoms</span><span class="cn">/ 下装</span></div>
+      <div class="cat-item">
+        <div class="name">Shorts · Split Structure <span class="db">72dB</span></div>
+        <div class="spec">BLACK · REGULAR · 160g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Shorts · Data Flow <span class="db">68dB</span></div>
+        <div class="spec">GRAPHITE · REGULAR · 160g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Compression · Core <span class="db">HIGH</span></div>
+        <div class="spec">BLACK · HIGH SUPPORT · 160g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Compression · Dual Layer <span class="db">MED</span></div>
+        <div class="spec">BLACK / GREEN · 180g</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Running Pants <span class="db">68dB</span></div>
+        <div class="spec">STRUCTURAL · TAPERED · ~210g</div>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-title"><span class="en">Accessories</span><span class="cn">/ 配件</span></div>
+      <div class="cat-item">
+        <div class="name">Running Cap <span class="db">70dB</span></div>
+        <div class="spec">BLACK · ONE SIZE · ADJUSTABLE</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Arm Sleeves <span class="db">65dB</span></div>
+        <div class="spec">BLACK · UPF 50+ · S/M/L</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Running Waist Bag <span class="db">75dB</span></div>
+        <div class="spec">BLACK · YKK · ONE SIZE</div>
+      </div>
+      <div class="cat-item">
+        <div class="name">Running Socks <span class="db">60dB</span></div>
+        <div class="spec">BLACK / NEON · PERF FIT · S/M/L</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- catalog gallery (rendered manual pages) -->
+  <div class="catalog-head">
+    <span class="label">/ DIGITAL CATALOG — 2026 PERFORMANCE EXPORT</span>
+    <span class="hint">CLICK ANY PAGE TO ENLARGE ↗</span>
+  </div>
+  <div class="catalog-grid" id="catalogGrid">
+    <div class="cat-page" data-full="assets/catalog/page-01.jpg">
+      <span class="pg-tag">P.01</span>
+      <img src="assets/catalog/page-01.jpg" alt="City Invasion Tank 92dB" loading="lazy">
+      <div class="pg-cap">City Invasion Tank · 92dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-02.jpg">
+      <span class="pg-tag">P.02</span>
+      <img src="assets/catalog/page-02.jpg" alt="City Invasion Tank 87dB" loading="lazy">
+      <div class="pg-cap">City Invasion Tank · 87dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-03.jpg">
+      <span class="pg-tag">P.03</span>
+      <img src="assets/catalog/page-03.jpg" alt="City Invasion T-Shirt 92dB" loading="lazy">
+      <div class="pg-cap">City Invasion Tee · 92dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-04.jpg">
+      <span class="pg-tag">P.04</span>
+      <img src="assets/catalog/page-04.jpg" alt="City Invasion T-Shirt 87dB" loading="lazy">
+      <div class="pg-cap">City Invasion Tee · 87dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-05.jpg">
+      <span class="pg-tag">P.05</span>
+      <img src="assets/catalog/page-05.jpg" alt="Running Shell Jacket" loading="lazy">
+      <div class="pg-cap">Shell Jacket · 72 / 65dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-06.jpg">
+      <span class="pg-tag">P.06</span>
+      <img src="assets/catalog/page-06.jpg" alt="Sports Skin Jacket 92dB" loading="lazy">
+      <div class="pg-cap">Sports Skin Jacket · 92dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-07.jpg">
+      <span class="pg-tag">P.07</span>
+      <img src="assets/catalog/page-07.jpg" alt="Sports Skin Hoodie 87dB" loading="lazy">
+      <div class="pg-cap">Sports Skin Hoodie · 87dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-08.jpg">
+      <span class="pg-tag">P.08</span>
+      <img src="assets/catalog/page-08.jpg" alt="Running Shorts" loading="lazy">
+      <div class="pg-cap">Running Shorts · Split / Flow</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-09.jpg">
+      <span class="pg-tag">P.09</span>
+      <img src="assets/catalog/page-09.jpg" alt="Compression Shorts" loading="lazy">
+      <div class="pg-cap">Compression · Core / Dual</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-10.jpg">
+      <span class="pg-tag">P.10</span>
+      <img src="assets/catalog/page-10.jpg" alt="Running Pants 68dB" loading="lazy">
+      <div class="pg-cap">Running Pants · 68dB</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-11.jpg">
+      <span class="pg-tag">P.11</span>
+      <img src="assets/catalog/page-11.jpg" alt="Accessories Cap Arm" loading="lazy">
+      <div class="pg-cap">Accessories · Cap / Arm</div>
+    </div>
+    <div class="cat-page" data-full="assets/catalog/page-12.jpg">
+      <span class="pg-tag">P.12</span>
+      <img src="assets/catalog/page-12.jpg" alt="Accessories Bag Sock" loading="lazy">
+      <div class="pg-cap">Accessories · Bag / Sock</div>
+    </div>
+  </div>
+</section>
+
+<!-- lightbox -->
+<div class="lb" id="lightbox">
+  <div class="lb-close" id="lbClose">CLOSE ✕</div>
+  <div class="lb-nav lb-prev" id="lbPrev">‹</div>
+  <img id="lbImg" src="" alt="catalog page">
+  <div class="lb-nav lb-next" id="lbNext">›</div>
+  <div class="lb-count"><span class="c" id="lbCur">01</span> / 12</div>
+</div>
+
 <!-- ==================== CTA ==================== -->
 <section class="cta">
   <h2>
@@ -1222,6 +1641,51 @@
       video.addEventListener('play', function () {
         overlay.classList.add('hidden');
       });
+    });
+  })();
+
+  // Catalog lightbox: click a manual page to view it full-size, with prev/next.
+  (function () {
+    var grid = document.getElementById('catalogGrid');
+    var lb = document.getElementById('lightbox');
+    if (!grid || !lb) return;
+
+    var pages = Array.prototype.map.call(
+      grid.querySelectorAll('.cat-page'),
+      function (el) { return el.getAttribute('data-full'); }
+    );
+    var img = document.getElementById('lbImg');
+    var cur = document.getElementById('lbCur');
+    var idx = 0;
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function show(i) {
+      idx = (i + pages.length) % pages.length;
+      img.src = pages[idx];
+      cur.textContent = pad(idx + 1);
+    }
+    function open(i) { show(i); lb.classList.add('open'); }
+    function close() { lb.classList.remove('open'); }
+
+    grid.querySelectorAll('.cat-page').forEach(function (el, i) {
+      el.addEventListener('click', function () { open(i); });
+    });
+    document.getElementById('lbClose').addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', function (e) {
+      e.stopPropagation(); show(idx - 1);
+    });
+    document.getElementById('lbNext').addEventListener('click', function (e) {
+      e.stopPropagation(); show(idx + 1);
+    });
+    // Click on the dimmed backdrop (not the image) closes.
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(idx - 1);
+      else if (e.key === 'ArrowRight') show(idx + 1);
     });
   })();
 </script>
